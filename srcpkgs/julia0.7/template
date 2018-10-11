@@ -1,0 +1,69 @@
+# Template file for 'julia0.7'
+pkgname=julia0.7
+version=0.7.0
+revision=1
+wrksrc=julia
+# Falsely detects dependency on libllvm
+noverifyrdeps=yes
+nocross=yes
+build_style=gnu-makefile
+make_build_args="prefix=/usr sysconfdir=/etc USE_SYSTEM_LLVM=0 USE_LLVM_SHLIB=1
+ USE_SYSTEM_PCRE=1 USE_SYSTEM_BLAS=1 USE_SYSTEM_LAPACK=1 USE_SYSTEM_GMP=1
+ USE_SYSTEM_MPFR=1 USE_SYSTEM_LIBUV=0 USE_SYSTEM_LIBGIT2=1
+ LIBLAPACK=-lopenblas LIBLAPACKNAME=libopenblas
+ LIBBLAS=-lopenblas LIBBLASNAME=libopenblas"
+make_install_args=$make_build_args
+make_check_args=$make_build_args
+make_check_target=testall
+hostmakedepends="curl perl cmake python"
+makedepends="openblas-devel pcre2-devel gmp-devel mpfr-devel libgit2-devel
+ libcurl-devel libssh2-devel mbedtls-devel libatomic-devel"
+depends="openblas pcre2 gmp mpfr libgit2
+ libcurl libssh2 mbedtls libatomic"
+conf_files="/etc/julia/startup.jl"
+only_for_archs="i686 x86_64 i686-musl x86_64-musl"
+short_desc="High-level, high-performance dynamic programming language"
+maintainer="Francisco Gómez <espectalll@kydara.com>"
+license="MIT"
+homepage="https://julialang.org"
+distfiles="https://github.com/JuliaLang/julia/releases/download/v${version}/julia-${version}.tar.gz"
+checksum=991672bf03b1d9a131c7e170518330022eb05069409d51e48317071597eb096b
+
+case "$XBPS_TARGET_MACHINE" in
+i686-musl)
+	makedepends+=" libexecinfo-devel"
+	depends+=" libexecinfo"
+	LDFLAGS="-lexecinfo -lc"
+	;;
+x86_64-musl)
+	makedepends+=" libexecinfo-devel"
+	depends+=" libexecinfo"
+	LDFLAGS="-lexecinfo"
+	;;
+esac
+
+case "$XBPS_TARGET_MACHINE" in
+i686*)
+	export M="pentium4"
+	export CFLAGS="-march=pentium4"
+	export CXXFLAGS="-march=pentium4"
+	make_build_args+=" MARCH=pentium4"
+	;;
+x86_64*)
+	export M="x86-64"
+	export CFLAGS="-march=x86-64"
+	export CXXFLAGS="-march=x86-64"
+	make_build_args+=" MARCH=x86-64"
+	;;
+esac
+
+post_extract() {
+	sed -i '/^install:/s| \$(BUILDROOT)/doc.*||' Makefile
+  sed -i 's|/julia$|julia0.7|'
+}
+pre_install() {
+    vbin bin/julia julia0.7
+}
+post_install() {
+	vlicense LICENSE.md
+}
