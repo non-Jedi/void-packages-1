@@ -59,11 +59,13 @@ esac
 
 post_extract() {
 	sed -i '/^install:/s| \$(BUILDROOT)/doc.*||' Makefile
-  sed -i 's|/julia$|julia0.7|'
-}
-pre_install() {
-    vbin bin/julia julia0.7
+  sed -i 's|(prefix)/share|(prefix)/share/julia0.7|' Make.inc
+  sed -i 's|(prefix)/include|(prefix)/include/julia0.7|' Make.inc
+  sed -i 's|/julia$|/julia0.7|' Make.inc
 }
 post_install() {
-	vlicense LICENSE.md
+	  vlicense LICENSE.md
+    mv $DESTDIR/usr/bin/julia $DESTDIR/usr/bin/julia0.7
+    mkdir -p $DESTDIR/usr/share/julia
+    mv $DESTDIR/usr/share/julia0.7/julia/stdlib $DESTDIR/usr/share/julia/stdlib
 }
