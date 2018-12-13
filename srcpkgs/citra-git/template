@@ -1,0 +1,25 @@
+# Template file for 'citra-git
+pkgname=citra-git
+version=1
+revision=1
+build_style=cmake
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="git pkg-config"
+makedepends="SDL2-devel qt5-devel qt5-multimedia-devel"
+depends=""
+short_desc="Nintendo 3DS emulator"
+maintainer="Adam Beckmeyer <adam_gpg@thebeckmeyers.xyz>"
+license="GPL-2.0-or-later"
+homepage="https://citra-emu.org"
+gitdistfiles="https://github.com/citra-emu/citra"
+
+do_fetch() {
+    git clone ${gitdistfiles} ${wrksrc}
+    cd $wrksrc
+    git submodule sync
+    git submodule update --init --recursive
+}
