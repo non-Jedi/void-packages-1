@@ -1,0 +1,30 @@
+# Template file for 'dolphin-emu-git'
+only_for_archs="x86_64 x86_64-musl"
+
+pkgname=dolphin-emu-git
+version=db2542886a76a3d346fbdb019dec6b0afd53bd84
+revision=1
+wrksrc="dolphin-${version}"
+build_style=cmake
+nopie=yes
+configure_args="-DUSE_X11=1 -DUSE_EGL=0
+ -DwxWidgets_CONFIG_EXECUTABLE=/usr/bin/wx-config-3.0"
+hostmakedepends="pkg-config git"
+makedepends="libao-devel alsa-lib-devel ffmpeg-devel libbluetooth-devel
+  libenet-devel gtk+-devel lzo-devel miniupnpc-devel libopenal-devel
+  pulseaudio-devel readline-devel SFML-devel soundtouch-devel libusb-devel
+  wxWidgets-devel wxWidgets-gtk3-devel libXext-devel MesaLib-devel libevdev-devel
+  eudev-libudev-devel libXrandr-devel qt5-devel glslang-devel mbedtls-devel
+  libcurl-devel glu-devel libSM-devel"
+depends="desktop-file-utils"
+conflicts="dolphin-emu"
+short_desc="A Gamecube / Wii / Triforce emulator"
+maintainer="Juan RP <xtraeme@voidlinux.eu>"
+license="GPL-2"
+homepage="http://dolphin-emu.org"
+distfiles="https://github.com/dolphin-emu/dolphin/archive/${version}.tar.gz"
+checksum=cf8f63cbb2c20a951301c57dfe54633bd8e1297490c76dc14249f0d4987f2fc8
+
+post_install() {
+	rm -f ${DESTDIR}/usr/lib/*.a
+}
