@@ -1,0 +1,13 @@
+# Template file for 'openbazaar-go'
+pkgname=openbazaar-go
+version=0.12.4
+revision=1
+build_style=go
+go_import_path="github.com/OpenBazaar/openbazaar-go"
+hostmakedepends="go"
+short_desc="Server daemon for the OpenBazaar 2 p2p online marketplace"
+maintainer="Adam Beckmeyer <adam_gpg@thebeckmeyers.xyz>"
+license="MIT"
+homepage="https://openbazaar.org"
+distfiles="https://github.com/OpenBazaar/openbazaar-go/archive/v${version}.tar.gz"
+checksum=974af59a0b3b1751e141d0f6a320faf3152239be831c030ac81c2cc883b5bd15
