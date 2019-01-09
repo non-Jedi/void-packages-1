@@ -1,0 +1,24 @@
+# Template file for 'openbazaar-desktop'
+pkgname=openbazaar-desktop
+version=2.2.5
+revision=1
+#wrksrc=
+#create_wrksrc=yes
+#only_for_archs="i686 x86_64"
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="nodejs"
+makedepends=""
+depends=""
+short_desc="Client front-end for the OpenBazaar 2 daemon, openbazaar-go"
+maintainer="Adam Beckmeyer <adam_gpg@thebeckmeyers.xyz>"
+license="MIT"
+homepage="https://openbazaar.org"
+distfiles="https://github.com/OpenBazaar/openbazaar-desktop/archive/v${version}.tar.gz"
+checksum=badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadb
+
+do_build() {
+    npm install
+    npm run build
+    npm prune --production
+}
