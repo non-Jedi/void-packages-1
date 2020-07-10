@@ -1,0 +1,22 @@
+# Template file for 'darcsden'
+pkgname=darcsden
+version=1.1.1
+revision=1
+#archs="i686 x86_64"
+#wrksrc=
+#create_wrksrc=yes
+build_style=haskell-stack
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="ghc stack"
+makedepends="libressl-devel pcre-devel"
+depends=""
+short_desc="Darcs repository hosting platform and web app"
+maintainer="Adam Beckmeyer <adam_gpg@thebeckmeyers.xyz>"
+license="GPL-3.0-or-later"
+homepage="https://hub.darcs.net/simon/darcsden"
+distfiles="https://hackage.haskell.org/package/${pkgname}-${version}/${pkgname}-${version}.tar.gz"
+checksum=85011d74d264d2dcf4a90665da5c7a17da77a3d74160309d16b12ea38c3ae8b7
